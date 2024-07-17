@@ -1,6 +1,6 @@
 from numpy import *
 import pandas as pd
-from ete2 import Tree
+from ete3 import Tree
 from alignment import tCoffee
 from subprocess import Popen
 import os
@@ -13,7 +13,7 @@ def nexCharOutput(chMtx,names,outfile,datatype='STANDARD'):
     f.write('FORMAT DATATYPE='+datatype+' GAP=? MISSING=- interleave=yes;\n')
     f.write('MATRIX\n\n')
     txLgth = max(map(len,names))
-    for i in xrange(len(chMtx)):
+    for i in range(len(chMtx)):
         f.write(names[i].ljust(txLgth+2))
         for ch in chMtx[i]:
             if ch==-1: ch='-'

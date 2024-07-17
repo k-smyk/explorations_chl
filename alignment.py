@@ -1,58 +1,16 @@
-from numpy import *
-from os import getenv
-from ete2 import Tree
+import math
+from ete3 import Tree  #ete3 for python3
 import re
-from Bio import pairwise2
+import numpy as np
+from numpy import *
 
 def match(x,y):
     return [argwhere(y==z)[0][0] if z in y else None for z in x]
 
 
-def nwBio(x,y,lodict,gp1,gp2):
-    al = pairwise2.align.globalds(x,y,lodict,gp1,gp2)[0]
-    return al[2],array(al[:2])
 
-def nw(x,y,lodict,gp1,gp2):
-    """
-    Needleman-Wunsch algorithm for pairwise string alignment
-    with affine gap penalties.
-    'lodict' must be a dictionary with all symbol pairs as keys
-    and match scores as values.
-    gp1 and gp2 are gap penalties for opening/extending a gap.
-    Returns the alignment score and one optimal alignment.
-    """
-    n,m = len(x),len(y)
-    dp = zeros((n+1,m+1))
-    pointers = zeros((n+1,m+1),int)
-    for i in xrange(1,n+1):
-        dp[i,0] = dp[i-1,0]+(gp2 if i>1 else gp1)
-        pointers[i,0]=1
-    for j in xrange(1,m+1):
-        dp[0,j] = dp[0,j-1]+(gp2 if j>1 else gp1)
-        pointers[0,j]=2
-    for i in xrange(1,n+1):
-        for j in xrange(1,m+1):
-            match = dp[i-1,j-1]+lodict[x[i-1],y[j-1]]
-            insert = dp[i-1,j]+(gp2 if pointers[i-1,j]==1 else gp1)
-            delet = dp[i,j-1]+(gp2 if pointers[i,j-1]==2 else gp1)
-            dp[i,j] = max([match,insert,delet])
-            pointers[i,j] = argmax([match,insert,delet])
-    alg = []
-    i,j = n,m
-    while(i>0 or j>0):
-        pt = pointers[i,j]
-        if pt==0:
-            i-=1
-            j-=1
-            alg = [[x[i],y[j]]]+alg
-        if pt==1:
-            i-=1
-            alg = [[x[i],'-']]+alg
-        if pt==2:
-            j-=1
-            alg = [['-',y[j]]]+alg
-    return dp[-1,-1],array([''.join(x) for x in array(alg).T])
 
+###
 
 def algnMtx(al,sounds):
     """
@@ -90,7 +48,7 @@ def createLibrary(words,lodict,gp1,gp2,sounds):
                 x = library[w2,w1]
                 library[w1,w2] = x[0].T,x[1]
             else:
-                a1,a2 = nw(w1,w2,lodict,gp1,gp2)[1]
+                a1,a2 = nw(w1, w2, lodict, gp1, gp2)[1]
                 library[w1,w2] = algnMtx([a1,a2],sounds),(1-sHamming(a1,a2))
     return library
 
@@ -159,8 +117,8 @@ def nwBlock(b1,b2,lib):
     pointers = zeros((n+1,m+1),int)
     pointers[0,1:] = 2
     pointers[1:,0] = 1
-    for i in xrange(1,n+1):
-        for j in xrange(1,m+1):
+    for i in range(1,n+1):
+        for j in range(1,m+1):
             insert = dp[i-1,j]
             delet = dp[i,j-1]
             match = dp[i-1,j-1] + sum([0 if '-' in [gs1[i-1],gs2[j-1]]
@@ -181,7 +139,7 @@ def nwBlock(b1,b2,lib):
         elif p==1:
             alCombined = [list(al1[i-1])+['-']*len(b2)] + alCombined
             i-=1
-        else: 
+        else:
             alCombined = [['-']*len(b1)+list(al2[j-1])] + alCombined
             j-=1
     return array([''.join(x) for x in array(alCombined).T]),dp[-1,-1]
