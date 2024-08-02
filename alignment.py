@@ -7,9 +7,6 @@ from numpy import *
 def match(x,y):
     return [argwhere(y==z)[0][0] if z in y else None for z in x]
 
-
-
-
 ###
 
 def algnMtx(al,sounds):
