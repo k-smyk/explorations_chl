@@ -29,3 +29,5 @@ print(f"Average Difference in PMI Scores (IWSA - Original): {avg_pmi_difference:
 # Average PMI Score (IWSA): 1.2793
 # Average Difference in PMI Scores (IWSA - Original): 3.6648
 
+# IWSA doesn't work well on the small datasets - maybe that's why.
+

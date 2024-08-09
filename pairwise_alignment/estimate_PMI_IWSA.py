@@ -18,6 +18,7 @@ Original file is located at
 # !pip install multiprocessing
 # !pip install Levenshtein
 
+
 import random as pyrandom
 pyrandom.seed(12345)
 from numpy import *
@@ -28,6 +29,7 @@ import Levenshtein
 import re
 from Bio import pairwise2
 from multiprocessing import Process,Manager
+from info_score import InformationModel
 ncores = 50
 
 
@@ -183,6 +185,8 @@ th = 4.4451
 '''
 Start of Kateryna Smykovska's code
 '''
+# TODO: smoothing, IL - ?
+# IL - getMeanInfoScore
 def iwsa(a, b, w, IL):
     m, n = len(a), len(b)
     M = np.zeros((m + 1, n + 1))

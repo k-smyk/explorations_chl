@@ -160,3 +160,5 @@ nexCharOutput(ccMtx.values,ccMtx.index,'albanoRomanceCC.nex')
 
 
 ccData.to_csv('albanoRomanceCC.csv',index='False')
+
+# TODO what is compared with what in the PMI evaluation
