@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 df1 = pd.read_csv('pmi-albanoRomance.csv', header=0)
-df2 = pd.read_csv('pairwise_alignment/pmi-albanoRomance_IWSA.csv', header=0)
+df2 = pd.read_csv('pairwise_alignment/unfinished_iwsa/pmi-albanoRomance_IWSA.csv', header=0)
 common_rows = df1['col_0'].isin(df2['col_0'])
 common_columns = df1.columns.intersection(df2.columns)
 df1_common = df1[common_rows].reset_index(drop=True).set_index('col_0')[common_columns[1:]]

@@ -27,7 +27,7 @@ def nexCharOutput(chMtx,names,outfile,datatype='STANDARD'):
     f.write('FORMAT DATATYPE='+datatype+' GAP=? MISSING=- interleave=yes;\n')
     f.write('MATRIX\n\n')
     txLgth = max(map(len,names))
-    for i in xrange(len(chMtx)):
+    for i in range(len(chMtx)):
         f.write(names[i].ljust(txLgth+2))
         for ch in chMtx[i]:
             if ch==-1: ch='-'
@@ -194,7 +194,7 @@ def nwalign(w,pmiDict,gp1,gp2,th=-Inf):
         return zeros((0,2))
     for aa in a:
         l = len(aa[0])
-        aaa = [[aa[0][i],aa[1][i]] for i in xrange(l)]
+        aaa = [[aa[0][i],aa[1][i]] for i in range(l)]
         algn += [x for x in aaa if not '-' in x]
     return array(algn)
 
@@ -219,7 +219,7 @@ gp2=-1.70573165621
 th = 4.4451
 
 pmiDict = pmi0Dict.copy()
-for i in xrange(10):
+for i in range(10):
     alg = nwalignStar(training.values,pmiDict,gp1,gp2,th)
     sFreqs = pd.crosstab(alg[:,0],alg[:,1])
     sFreqs = sFreqs.reindex(sounds,fill_value=0).T

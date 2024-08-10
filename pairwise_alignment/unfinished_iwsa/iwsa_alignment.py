@@ -24,10 +24,9 @@ print(f"Decoded: {decoded}")
 correspondence_model = CorrespondenceModel(symbol_table=symbol_table)
 
 
-inference = CorrespondenceModelInference(concept_dict, symbol_table, verbose=True)
-global_corr_model = inference.infer_global_correspondence_model()
+# inference = CorrespondenceModelInference(concept_dict, symbol_table, verbose=True)
+# global_corr_model = inference.infer_global_correspondence_model()
 
-# Output the correspondence model
 print(global_corr_model)
 
 
