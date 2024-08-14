@@ -277,6 +277,3 @@ def levalignFull(w):
             ag = [ ['-']*(y_e-y_a),list(y[y_a:y_e])]
         algn = concatenate([algn,transpose(ag)])
     return algn
-
-
-
