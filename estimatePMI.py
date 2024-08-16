@@ -232,7 +232,7 @@ for i in range(10):
                for s1 in sounds for s2 in sounds}
 
 
-pmi.to_csv('pmi-albanoRomance.csv')
+pmi.to_csv('pmi-albanoRomance_new.csv')
 
 
 dataWL.to_csv('albanoRomanceASJP.csv',index=False)
