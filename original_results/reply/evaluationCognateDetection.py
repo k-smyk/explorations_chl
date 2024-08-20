@@ -25,7 +25,7 @@ d1 = d1[d1['class'].notnull()]
 d1['word'] = [cleanASJP(x) for x in d1.ASJP_transcription.values]
 d1['language'] = [x.replace('-', '_') for x in d1.ASJP_language.values]
 
-d2 = pd.read_csv('../albanoRomanceCC.csv', index_col=0)
+d2 = pd.read_csv('../../albanoRomanceCC.csv', index_col=0)
 
 d = pd.merge(d1, d2)[['concept', 'language', 'word', 'class', 'cc']]
 

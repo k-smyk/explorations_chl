@@ -3,31 +3,10 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="$USER_HOME$/Downloads/albanoRomanceASJP-pw.csv">
+        <entry key="/CCalbanoRomanceASJP.csv">
           <value>
             <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="$USER_HOME$/Downloads/albanoRomanceASJP-sw.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="$USER_HOME$/Downloads/pmi-albanoRomance-pw.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="$USER_HOME$/Downloads/pmi-albanoRomance-sw.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
+              <option name="separator" value="&#9;" />
             </Attribute>
           </value>
         </entry>
@@ -38,10 +17,17 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="/original_results/albanoRomanceCC.csv">
+        <entry key="/albanoRomanceCC.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/albanoRomanceCC_CPR.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="&#9;" />
             </Attribute>
           </value>
         </entry>
@@ -112,6 +98,13 @@
           <value>
             <Attribute>
               <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/test_crp.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="&#9;" />
             </Attribute>
           </value>
         </entry>
