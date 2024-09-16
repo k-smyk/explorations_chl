@@ -5,6 +5,10 @@ from alignment import tCoffee
 from subprocess import Popen
 import os
 
+import PyQt5 # for treestyle
+from ete3 import TreeStyle
+
+
 def nexCharOutput(chMtx,names,outfile,datatype='STANDARD'):
     f = open(outfile,'w')
     f.write('#NEXUS\n\n')
@@ -25,16 +29,51 @@ def nexCharOutput(chMtx,names,outfile,datatype='STANDARD'):
     f.close()
 
 
-guideTree = Tree('albanoRomance.mcc.nwk').get_children()[0]
+taxa_to_exclude = {'ALBANIAN', 'ALBANIAN_TOSK', 'ALBANIAN_GHEG'}
+taxa_to_exclude_set = set(taxa_to_exclude)
 
-asrCC = pd.read_csv('asrCC.csv',index_col=0,header=None)[1]
+
+def remove_taxa(tree, taxa_to_exclude_set=taxa_to_exclude_set):
+    def recurse_remove(node):
+        if node.is_leaf() and node.name in taxa_to_exclude_set:
+            node.delete()
+        else:
+            for child in node.get_children():
+                recurse_remove(child)
+    recurse_remove(tree)
+    return tree
 
 
-romance = array(guideTree.get_leaf_names())
+guideTreePW = Tree('albanoRomancePW.mcc.nwk')
+guideTreeSW = Tree('albanoRomanceSW.mcc.nwk')
+guideTreePW_rt = remove_taxa(Tree('albanoRomancePW.mcc.nwk'))
+guideTreeSW_rt = remove_taxa(Tree('albanoRomanceSW.mcc.nwk')) #why are they the same
 
-data = pd.read_csv('albanoRomanceCC.csv',index_col=0)
+ts = TreeStyle()
+ts.show_leaf_name = True
+ts.show_branch_length = True
 
-data = data[(data.language.isin(romance))&(data.cc.isin(asrCC.values))]
+guideTreePW.render('guideTreePW.png', tree_style=ts)
+guideTreeSW.render('guideTreeSW.png', tree_style=ts)
+guideTreePW_rt.render('guideTreePW_rt.png', tree_style=ts)
+guideTreeSW_rt.render('guideTreeSW_rt.png', tree_style=ts)
+
+
+asrCC_PW = pd.read_csv('asrCC_PW.csv',index_col=0,header=None)[1]
+print(asrCC_PW)
+with open('original_results/asrCC.csv','r') as f:
+    asrCC = pd.read_csv(f,index_col=0,header=None)[1]
+    print(asrCC)
+asrCC_SW = pd.read_csv('asrCC_SW.csv',index_col=0,header=None)[1]
+
+romancePW = array(guideTreePW_rt.get_leaf_names())
+romanceSW = array(guideTreeSW_rt.get_leaf_names())
+
+dataPW = pd.read_csv('albanoRomanceCC_PW.csv',index_col=0) #empty!
+dataSW = pd.read_csv('albanoRomanceCC_SW.csv',index_col=0)
+
+dataPW = dataPW[(dataPW.language.isin(romancePW))&(dataPW.cc.isin(asrCC_PW.values))]
+dataSW = dataSW[(dataSW.language.isin(romanceSW))&(dataSW.cc.isin(asrCC_SW.values))]
 
 gp1=-2.49302792222
 gp2=-1.70573165621
@@ -46,37 +85,49 @@ pmiDict = {(s1,s2):pmi[s1][s2]
            for s1 in sounds for s2 in sounds}
 
 
-concepts = asrCC.index
+conceptsPW = asrCC_PW.index
+conceptsSW = asrCC_SW.index
 
-aBlocks = pd.DataFrame()
-for c in concepts:
-    cData = data[data.cc==asrCC[c]]
-    if len(cData)>1:
-        alg = tCoffee(cData.language.values,cData.word.values,
-                      guideTree,pmiDict,gp1,gp2,sounds)
-        cAlg = pd.DataFrame([list(x[1]) for x in alg],
-                            index = [x[0] for x in alg])
-        cAlg[cAlg=='-'] = '0'
-    else:
-        cAlg = pd.DataFrame(map(list,cData.word.values),index=cData.language.values)
-    cAlg = cAlg.reindex(romance,fill_value='-')
-    cAlg.columns = [c+':'+str(i) for i in cAlg.columns]
-    aBlocks = pd.concat([aBlocks,cAlg],axis=1)
+aBlocksPW, aBlocksSW = pd.DataFrame(), pd.DataFrame()
 
 
-binMtx = pd.DataFrame(index=romance)
-for i in aBlocks.columns:
-    cl = aBlocks[i].values
-    states = unique([x for x in cl if x!='-'])
-    clMtx = pd.DataFrame([cl==s for s in states],dtype=int,
-                         columns=romance,
-                         index=[i+':'+s for s in states]).T
-    clMtx[cl=='-'] = '-'
-    binMtx = pd.concat([binMtx,clMtx],axis=1)
+def aBlocks_binMtx_filler(concepts, data, asrCC, romance, aBlocks, guideTree):
+    for c in concepts:
+        cData = data[data.cc==asrCC[c]]
+        if len(cData)>1:
+            alg = tCoffee(cData.language.values,cData.word.values,
+                          guideTree,pmiDict,gp1,gp2,sounds)
+            cAlg = pd.DataFrame([list(x[1]) for x in alg],
+                                index = [x[0] for x in alg])
+            cAlg[cAlg=='-'] = '0'
+        else:
+            cAlg = pd.DataFrame(map(list,cData.word.values),index=cData.language.values)
+        cAlg = cAlg.reindex(romance,fill_value='-')
+        cAlg.columns = [c+':'+str(i) for i in cAlg.columns]
+        aBlocks = pd.concat([aBlocks,cAlg],axis=1)
+    print(aBlocks)
 
-nexCharOutput(binMtx.values,binMtx.index,'romanceAlignments.nex')
+    binMtx = pd.DataFrame(index=romance)
+    for i in aBlocks.columns:
+        cl = aBlocks[i].values
+        states = unique([x for x in cl if x != '-'])
+        clMtx = pd.DataFrame([cl == s for s in states], dtype=int,
+                             columns=romance,
+                             index=[i + ':' + s for s in states]).T
+        clMtx[cl == '-'] = '-'
+        binMtx = pd.concat([binMtx, clMtx], axis=1)
+    return aBlocks, binMtx
 
-binMtx.to_csv('romanceAlignments.tsv',sep='\t',header=None)
+
+aBlocksPW, binMtxPW = aBlocks_binMtx_filler(conceptsPW, dataPW, asrCC_PW, romancePW, aBlocksPW, guideTreePW_rt)
+aBlocksSW, binMtxSW = aBlocks_binMtx_filler(conceptsSW, dataSW, asrCC_SW, romanceSW, aBlocksSW, guideTreeSW_rt)
+
+nexCharOutput(binMtxPW.values,binMtxPW.index,'romanceAlignmentsPW.nex')
+nexCharOutput(binMtxSW.values,binMtxSW.index,'romanceAlignmentsSW.nex')
+
+binMtxPW.to_csv('romanceAlignmentsPW.tsv',sep='\t',header=None)
+binMtxSW.to_csv('romanceAlignmentsSW.tsv',sep='\t',header=None)
+
 
 with open('btAlignments.txt','w') as f:
     f.write('1\n1\n')
@@ -85,24 +136,32 @@ with open('btAlignments.txt','w') as f:
     f.write('run\n')
 
 
-
-p = Popen('BayesTraits romance.posterior.nex.tree romanceAlignments.tsv < btAlignments.txt>/dev/null',
+pPW = Popen('BayesTraitsV4 romancePW.posterior.nex.tree romanceAlignmentsPW.tsv < btAlignments.txt>/dev/null',
           shell=True)
-os.waitpid(p.pid,0)
+os.waitpid(pPW.pid,0)
+pSW = Popen('BayesTraitsV4 romanceSW.posterior.nex.tree romanceAlignmentsSW.tsv < btAlignments.txt>/dev/null',
+          shell=True)
+os.waitpid(pSW.pid,0)
 
-results = pd.read_csv('romanceAlignments.tsv.log.txt',
+
+resultsPW = pd.read_csv('romanceAlignmentsPW.tsv.log.txt',
                       skiprows=23,sep='\t')
+resultsSW = pd.read_csv('romanceAlignmentsSW.tsv.log.txt',
+                        skiprows=23,sep='\t')
 
 
-idc = [x for x in results.columns if 'P(1)' in x]
+def result_mean(results, binMtx):
+    cl = [x for x in results.columns if 'P(1)' in x]
+    results = results[cl]
+    results.columns = binMtx.columns
+    return results.mean()
 
-results = results[idc]
 
-results.columns = binMtx.columns
+results_meanPW = result_mean(resultsPW, binMtxPW)
+results_meanSW = result_mean(resultsSW, binMtxSW)
 
-resultsMean = results.mean()
 
-def recon(res):
+def recon_original(res, aBlocks, concepts):
     asr = []
     for x in aBlocks.columns:
         idc = [y for y in res.index if ':'.join(y.split(':')[:2])==x]
@@ -116,16 +175,22 @@ def recon(res):
     return reconstruction
 
 
-reconstruction = pd.DataFrame(recon(resultsMean))
+reconstruction_original_PW = pd.DataFrame(recon_original(results_meanPW))
+reconstruction_original_SW = pd.DataFrame(recon_original(results_meanSW))
 
 
 asjp = pd.read_table('dataset.tab',index_col=0,
                      sep='\t')
 
-reconstruction['Latin'] = asjp.ix['LATIN'][concepts].values
 
-reconstruction.columns = ['reconstruction','Latin']
-reconstruction['concept'] = reconstruction.index
+def recon_latin(reconstruction, asjp, concepts):
+    reconstruction['Latin'] = asjp.loc['LATIN'][concepts].values
+    reconstruction.columns = ['reconstruction', 'Latin']
+    reconstruction['concept'] = reconstruction.index
+    reconstruction[['concept', 'Latin', 'reconstruction']].to_csv(f'{reconstruction}.csv',
+                                                                  index=False)
+    return reconstruction
 
-reconstruction[['concept','Latin','reconstruction']].to_csv('reconstruction.csv',
-                                                            index=False)
+
+reconstruction_results_PW = recon_latin(reconstruction_original_PW, asjp, conceptsPW)
+reconstruction_results_SW = recon_latin(reconstruction_original_SW, asjp, conceptsSW)

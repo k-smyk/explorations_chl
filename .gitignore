@@ -1,2 +1,10 @@
 /pairwise_alignment/unfinished_iwsa/
 test_crp_afraisian.csv
+<<<<<<< HEAD
+original_results/albanoRomance.wordpairs.csv
+site_libraries
+original_results
+albanoRomancePW.wordpairs.csv.zip
+albanoRomanceSW.wordpairs.csv.zip
+=======
+>>>>>>> parent of f7a4ba5 (ran phylogenetics on the new data)

@@ -31,6 +31,44 @@
             </Attribute>
           </value>
         </entry>
+<<<<<<< HEAD
+        <entry key="/albanoRomanceCC_PW.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/albanoRomanceCC_SW.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/albanoRomanceCCbinPW.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/asrCC_PW.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/asrCC_SW.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+=======
+>>>>>>> parent of f7a4ba5 (ran phylogenetics on the new data)
         <entry key="/original_results/albanoRomanceCCbin.csv">
           <value>
             <Attribute>
