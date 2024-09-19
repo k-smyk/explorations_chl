@@ -1,12 +1,12 @@
 #NEXUS 
 
-Begin trees;  [Treefile saved Mon Sep 16 15:10:24 2024]
+Begin trees;  [Treefile saved Thu Sep 19 14:08:01 2024]
 [!>
 >Processing TREES block from file: ~/Desktop/explorations_chl/romanceSW.posterior.tree
 >  Keeping: trees from file (replacing any trees already in memory)
 >  2000 trees read from file
 >
->  Time used = 0.26 sec (CPU time = 0.25 sec)
+>  Time used = 0.27 sec (CPU time = 0.26 sec)
 ]
 	Translate
 		1 LIGURIAN_STELLA,

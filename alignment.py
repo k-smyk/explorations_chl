@@ -3,6 +3,7 @@ from os import getenv
 from ete3 import Tree #ete3 for python3
 import re
 from Bio import pairwise2
+import numpy as np
 
 def match(x,y):
     return [argwhere(y==z)[0][0] if z in y else None for z in x]
@@ -187,19 +188,23 @@ def nwBlock(b1,b2,lib):
 
 
 def tCoffee(wTaxa,words,tree,lodict,gp1,gp2,sounds):
-    """tree must be a binary branching tree"""
-    lib = createExtendedLibrary(words,lodict,gp1,gp2,sounds)
+    """tree must be a binary branching tree
+    Upd.: made compatible with python3"""
+    lib = createExtendedLibrary(words, lodict, gp1, gp2, sounds)
     wTree = Tree(tree.write(format=9))
     wTree.prune([wTree&l for l in wTaxa])
-    wDict = dict(zip(wTaxa,words))
+    wDict = dict(zip(wTaxa, words))
+
     for nd in wTree.traverse('postorder'):
         if nd.is_leaf():
-            nd.add_feature('algn',array([wDict[nd.name]]))
-            nd.add_feature('nTaxa',array([nd.name]))
+            nd.add_feature('algn', np.array([wDict[nd.name]]))
+            nd.add_feature('nTaxa', np.array([nd.name]))
         else:
-            dl,dr = nd.get_children()
-            b1,b2 = dl.algn,dr.algn
-            a = nwBlock(b1,b2,lib)[0]
-            nd.add_feature('algn',a)
-            nd.add_feature('nTaxa',concatenate([dl.nTaxa,dr.nTaxa]))
-    return zip(wTree.nTaxa,wTree.algn)
+            dl, dr = nd.get_children()
+            b1, b2 = dl.algn, dr.algn
+            a = nwBlock(b1, b2, lib)[0]
+            nd.add_feature('algn', a)
+            nd.add_feature('nTaxa', np.concatenate([dl.nTaxa, dr.nTaxa]))
+
+    alignment_data = list(zip(wTree.nTaxa, wTree.algn))
+    return alignment_data

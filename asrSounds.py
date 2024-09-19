@@ -33,9 +33,9 @@ taxa_to_exclude = {'ALBANIAN', 'ALBANIAN_TOSK', 'ALBANIAN_GHEG'}
 taxa_to_exclude_set = set(taxa_to_exclude)
 
 
-def remove_taxa(tree, taxa_to_exclude_set=taxa_to_exclude_set):
+def remove_taxa(tree, taxa_to_exclude=taxa_to_exclude_set):
     def recurse_remove(node):
-        if node.is_leaf() and node.name in taxa_to_exclude_set:
+        if node.is_leaf() and node.name in taxa_to_exclude:
             node.delete()
         else:
             for child in node.get_children():
@@ -47,7 +47,7 @@ def remove_taxa(tree, taxa_to_exclude_set=taxa_to_exclude_set):
 guideTreePW = Tree('albanoRomancePW.mcc.nwk')
 guideTreeSW = Tree('albanoRomanceSW.mcc.nwk')
 guideTreePW_rt = remove_taxa(Tree('albanoRomancePW.mcc.nwk'))
-guideTreeSW_rt = remove_taxa(Tree('albanoRomanceSW.mcc.nwk')) #why are they the same
+guideTreeSW_rt = remove_taxa(Tree('albanoRomanceSW.mcc.nwk'))
 
 ts = TreeStyle()
 ts.show_leaf_name = True
@@ -58,22 +58,18 @@ guideTreeSW.render('guideTreeSW.png', tree_style=ts)
 guideTreePW_rt.render('guideTreePW_rt.png', tree_style=ts)
 guideTreeSW_rt.render('guideTreeSW_rt.png', tree_style=ts)
 
-
-asrCC_PW = pd.read_csv('asrCC_PW.csv',index_col=0,header=None)[1]
-print(asrCC_PW)
-with open('original_results/asrCC.csv','r') as f:
-    asrCC = pd.read_csv(f,index_col=0,header=None)[1]
-    print(asrCC)
-asrCC_SW = pd.read_csv('asrCC_SW.csv',index_col=0,header=None)[1]
+asrCC_PW = pd.read_csv('asrCC_PW.csv', header=None, index_col=0)[1]
+asrCC_SW = pd.read_csv('asrCC_SW.csv', header=None, index_col=0)[1]
 
 romancePW = array(guideTreePW_rt.get_leaf_names())
 romanceSW = array(guideTreeSW_rt.get_leaf_names())
 
-dataPW = pd.read_csv('albanoRomanceCC_PW.csv',index_col=0) #empty!
+dataPW = pd.read_csv('albanoRomanceCC_PW.csv',index_col=0)
 dataSW = pd.read_csv('albanoRomanceCC_SW.csv',index_col=0)
 
 dataPW = dataPW[(dataPW.language.isin(romancePW))&(dataPW.cc.isin(asrCC_PW.values))]
 dataSW = dataSW[(dataSW.language.isin(romanceSW))&(dataSW.cc.isin(asrCC_SW.values))]
+
 
 gp1=-2.49302792222
 gp2=-1.70573165621
@@ -87,6 +83,7 @@ pmiDict = {(s1,s2):pmi[s1][s2]
 
 conceptsPW = asrCC_PW.index
 conceptsSW = asrCC_SW.index
+
 
 aBlocksPW, aBlocksSW = pd.DataFrame(), pd.DataFrame()
 
@@ -105,7 +102,6 @@ def aBlocks_binMtx_filler(concepts, data, asrCC, romance, aBlocks, guideTree):
         cAlg = cAlg.reindex(romance,fill_value='-')
         cAlg.columns = [c+':'+str(i) for i in cAlg.columns]
         aBlocks = pd.concat([aBlocks,cAlg],axis=1)
-    print(aBlocks)
 
     binMtx = pd.DataFrame(index=romance)
     for i in aBlocks.columns:
@@ -114,6 +110,7 @@ def aBlocks_binMtx_filler(concepts, data, asrCC, romance, aBlocks, guideTree):
         clMtx = pd.DataFrame([cl == s for s in states], dtype=int,
                              columns=romance,
                              index=[i + ':' + s for s in states]).T
+        clMtx = clMtx.astype(object)
         clMtx[cl == '-'] = '-'
         binMtx = pd.concat([binMtx, clMtx], axis=1)
     return aBlocks, binMtx
@@ -129,6 +126,7 @@ binMtxPW.to_csv('romanceAlignmentsPW.tsv',sep='\t',header=None)
 binMtxSW.to_csv('romanceAlignmentsSW.tsv',sep='\t',header=None)
 
 
+
 with open('btAlignments.txt','w') as f:
     f.write('1\n1\n')
     f.write('seed 12345;\n')
@@ -136,18 +134,25 @@ with open('btAlignments.txt','w') as f:
     f.write('run\n')
 
 
-pPW = Popen('BayesTraitsV4 romancePW.posterior.nex.tree romanceAlignmentsPW.tsv < btAlignments.txt>/dev/null',
+pPW = Popen('BayesTraitsV4 romancePW.posterior.nex.tree romanceAlignmentsPW.tsv < btAlignments.txt',
           shell=True)
 os.waitpid(pPW.pid,0)
-pSW = Popen('BayesTraitsV4 romanceSW.posterior.nex.tree romanceAlignmentsSW.tsv < btAlignments.txt>/dev/null',
+pSW = Popen('BayesTraitsV4 romanceSW.posterior.nex.tree romanceAlignmentsSW.tsv < btAlignments.txt',
           shell=True)
 os.waitpid(pSW.pid,0)
 
-
 resultsPW = pd.read_csv('romanceAlignmentsPW.tsv.log.txt',
-                      skiprows=23,sep='\t')
+                      skiprows=33,sep='\t')
 resultsSW = pd.read_csv('romanceAlignmentsSW.tsv.log.txt',
-                        skiprows=23,sep='\t')
+                        skiprows=33,sep='\t')
+
+print("resultsPW shape:", resultsPW.shape)
+print("binMtxPW shape:", binMtxPW.shape)
+print(resultsPW.head())
+if not resultsPW.empty:
+    print("resultsPW columns:", resultsPW.columns)
+if not binMtxPW.empty:
+    print("binMtxPW columns:", binMtxPW.columns)
 
 
 def result_mean(results, binMtx):

@@ -91,13 +91,13 @@ winnersPW = []
 winnersSW = []
 for c in conceptsPW:
     cChars = [x for x in resultsPW.columns if x.split(':')[0]==c]
-    winnersPW.append(resultsPW.mean()[cChars].argmax())
+    winnersPW.append(resultsPW.mean()[cChars].idxmax())
 for c in conceptsSW:
     cChars = [x for x in resultsSW.columns if x.split(':')[0]==c]
-    winnersSW.append(resultsSW.mean()[cChars].argmax())
+    winnersSW.append(resultsSW.mean()[cChars].idxmax())
 
 winnersPW = pd.Series(winnersPW,index=conceptsPW)
 winnersSW = pd.Series(winnersSW,index=conceptsSW)
 
-winnersPW.to_csv('asrCC_PW.csv')
-winnersSW.to_csv('asrCC_SW.csv')
+winnersPW.to_csv('asrCC_PW.csv', header=False)
+winnersSW.to_csv('asrCC_SW.csv', header=False)

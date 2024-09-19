@@ -3,35 +3,6 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="/CCalbanoRomanceASJP.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="&#9;" />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/albanoRomanceASJP.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/albanoRomanceCC.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/albanoRomanceCC_CPR.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="&#9;" />
-            </Attribute>
-          </value>
-        </entry>
-<<<<<<< HEAD
         <entry key="/albanoRomanceCC_PW.csv">
           <value>
             <Attribute>
@@ -46,7 +17,7 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="/albanoRomanceCCbinPW.csv">
+        <entry key="/albanoRomanceCCbinSW.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -60,36 +31,6 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="/asrCC_SW.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-=======
->>>>>>> parent of f7a4ba5 (ran phylogenetics on the new data)
-        <entry key="/original_results/albanoRomanceCCbin.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/original_results/asrCC.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/original_results/reconstruction.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="/original_results/reply/IELex+ASJP.csv">
           <value>
             <Attribute>
@@ -97,52 +38,10 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="/original_results/romanceEvaluation.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/pairwise_alignment/pmi-albanoRomance-nw.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/pairwise_alignment/pmi-albanoRomance-pw.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/pairwise_alignment/pmi-albanoRomance-sw.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/pairwise_alignment/pmi-albanoRomance.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="/pmi-albanoRomance.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/test_crp.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="&#9;" />
             </Attribute>
           </value>
         </entry>
