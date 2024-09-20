@@ -45,6 +45,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/reconstruction_results_PW.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/reconstruction_results_SW.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>

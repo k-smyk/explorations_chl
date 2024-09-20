@@ -119,12 +119,13 @@ def aBlocks_binMtx_filler(concepts, data, asrCC, romance, aBlocks, guideTree):
 aBlocksPW, binMtxPW = aBlocks_binMtx_filler(conceptsPW, dataPW, asrCC_PW, romancePW, aBlocksPW, guideTreePW_rt)
 aBlocksSW, binMtxSW = aBlocks_binMtx_filler(conceptsSW, dataSW, asrCC_SW, romanceSW, aBlocksSW, guideTreeSW_rt)
 
-nexCharOutput(binMtxPW.values,binMtxPW.index,'romanceAlignmentsPW.nex')
-nexCharOutput(binMtxSW.values,binMtxSW.index,'romanceAlignmentsSW.nex')
+#nexCharOutput(binMtxPW.values,binMtxPW.index,'romanceAlignmentsPW.nex')
+nexCharOutput(binMtxPW.to_numpy(),binMtxPW.index,'romanceAlignmentsPW.nex')
+#nexCharOutput(binMtxSW.values,binMtxSW.index,'romanceAlignmentsSW.nex')
+nexCharOutput(binMtxSW.to_numpy(),binMtxSW.index,'romanceAlignmentsSW.nex')
 
-binMtxPW.to_csv('romanceAlignmentsPW.tsv',sep='\t',header=None)
-binMtxSW.to_csv('romanceAlignmentsSW.tsv',sep='\t',header=None)
-
+binMtxPW.to_csv('romanceAlignmentsPW.tsv',sep='\t',header=False)
+binMtxSW.to_csv('romanceAlignmentsSW.tsv',sep='\t',header=False)
 
 
 with open('btAlignments.txt','w') as f:
@@ -142,22 +143,15 @@ pSW = Popen('BayesTraitsV4 romanceSW.posterior.nex.tree romanceAlignmentsSW.tsv 
 os.waitpid(pSW.pid,0)
 
 resultsPW = pd.read_csv('romanceAlignmentsPW.tsv.log.txt',
-                      skiprows=33,sep='\t')
+                      skiprows=31,sep='\t')
 resultsSW = pd.read_csv('romanceAlignmentsSW.tsv.log.txt',
-                        skiprows=33,sep='\t')
-
-print("resultsPW shape:", resultsPW.shape)
-print("binMtxPW shape:", binMtxPW.shape)
-print(resultsPW.head())
-if not resultsPW.empty:
-    print("resultsPW columns:", resultsPW.columns)
-if not binMtxPW.empty:
-    print("binMtxPW columns:", binMtxPW.columns)
+                        skiprows=31,sep='\t')
 
 
 def result_mean(results, binMtx):
-    cl = [x for x in results.columns if 'P(1)' in x]
-    results = results[cl]
+    idc = [x for x in results.columns if 'P(1)' in x]
+    print(idc)
+    results = results[idc]
     results.columns = binMtx.columns
     return results.mean()
 
@@ -180,22 +174,21 @@ def recon_original(res, aBlocks, concepts):
     return reconstruction
 
 
-reconstruction_original_PW = pd.DataFrame(recon_original(results_meanPW))
-reconstruction_original_SW = pd.DataFrame(recon_original(results_meanSW))
+reconstruction_original_PW = pd.DataFrame(recon_original(results_meanPW, aBlocksPW, conceptsPW))
+reconstruction_original_SW = pd.DataFrame(recon_original(results_meanSW, aBlocksSW, conceptsSW))
 
 
-asjp = pd.read_table('dataset.tab',index_col=0,
-                     sep='\t')
+asjp = pd.read_table('dataset.tab', index_col=0, sep='\t')
 
 
-def recon_latin(reconstruction, asjp, concepts):
+def recon_latin(reconstruction, asjp, concepts, filename):
     reconstruction['Latin'] = asjp.loc['LATIN'][concepts].values
     reconstruction.columns = ['reconstruction', 'Latin']
     reconstruction['concept'] = reconstruction.index
-    reconstruction[['concept', 'Latin', 'reconstruction']].to_csv(f'{reconstruction}.csv',
+    reconstruction[['concept', 'Latin', 'reconstruction']].to_csv(f'{filename}.csv',
                                                                   index=False)
     return reconstruction
 
 
-reconstruction_results_PW = recon_latin(reconstruction_original_PW, asjp, conceptsPW)
-reconstruction_results_SW = recon_latin(reconstruction_original_SW, asjp, conceptsSW)
+reconstruction_results_PW = recon_latin(reconstruction_original_PW, asjp, conceptsPW, 'reconstruction_results_PW')
+reconstruction_results_SW = recon_latin(reconstruction_original_SW, asjp, conceptsSW, 'reconstruction_results_SW')
