@@ -58,14 +58,14 @@ guideTreeSW.render('guideTreeSW.png', tree_style=ts)
 guideTreePW_rt.render('guideTreePW_rt.png', tree_style=ts)
 guideTreeSW_rt.render('guideTreeSW_rt.png', tree_style=ts)
 
-asrCC_PW = pd.read_csv('asrCC_PW.csv', header=None, index_col=0)[1]
-asrCC_SW = pd.read_csv('asrCC_SW.csv', header=None, index_col=0)[1]
+asrCC_PW = pd.read_csv('dialign+original pipeline/asrCC_PW.csv', header=None, index_col=0)[1]
+asrCC_SW = pd.read_csv('sw+original pipeline/asrCC_SW.csv', header=None, index_col=0)[1]
 
 romancePW = array(guideTreePW_rt.get_leaf_names())
 romanceSW = array(guideTreeSW_rt.get_leaf_names())
 
-dataPW = pd.read_csv('albanoRomanceCC_PW.csv',index_col=0)
-dataSW = pd.read_csv('albanoRomanceCC_SW.csv',index_col=0)
+dataPW = pd.read_csv('dialign+original pipeline/albanoRomanceCC_PW.csv', index_col=0)
+dataSW = pd.read_csv('sw+original pipeline/albanoRomanceCC_SW.csv', index_col=0)
 
 dataPW = dataPW[(dataPW.language.isin(romancePW))&(dataPW.cc.isin(asrCC_PW.values))]
 dataSW = dataSW[(dataSW.language.isin(romanceSW))&(dataSW.cc.isin(asrCC_SW.values))]
