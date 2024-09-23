@@ -22,30 +22,30 @@ def nexCharOutput(chMtx,names,outfile,datatype='STANDARD'):
     f.close()
 
 
-scPW = pd.read_table('dialign+original pipeline/albanoRomanceSC-pw.nex',
-                     skiprows=7,
-                     skipfooter=4, engine='python',
-                     index_col=0,
-                     sep='\s+', header=None)
+scPW = pd.read_table('dialign+original_pipeline/albanoRomanceSC-pw.nex',
+					 skiprows=7,
+					 skipfooter=4, engine='python',
+					 index_col=0,
+					 sep='\s+', header=None)
 
-scSW = pd.read_table('sw+original pipeline/albanoRomanceSC-sw.nex',
-                     skiprows=7,
-                     skipfooter=4, engine='python',
-                     index_col=0,
-                     sep='\s+', header=None)
+scSW = pd.read_table('sw+original_pipeline/albanoRomanceSC-sw.nex',
+					 skiprows=7,
+					 skipfooter=4, engine='python',
+					 index_col=0,
+					 sep='\s+', header=None)
 
 
-ccPW = pd.read_table('dialign+original pipeline/albanoRomanceCC_PW.nex',
-                     skiprows=7,
-                     skipfooter=4, engine='python',
-                     index_col=0,
-                     sep='\s+', header=None)
+ccPW = pd.read_table('dialign+original_pipeline/albanoRomanceCC_PW.nex',
+					 skiprows=7,
+					 skipfooter=4, engine='python',
+					 index_col=0,
+					 sep='\s+', header=None)
 
-ccSW = pd.read_table('sw+original pipeline/albanoRomanceCC_SW.nex',
-                     skiprows=7,
-                     skipfooter=4, engine='python',
-                     index_col=0,
-                     sep='\s+', header=None)
+ccSW = pd.read_table('sw+original_pipeline/albanoRomanceCC_SW.nex',
+					 skiprows=7,
+					 skipfooter=4, engine='python',
+					 index_col=0,
+					 sep='\s+', header=None)
 
 ccPW = ccPW.loc[scPW.index]
 ccSW = ccSW.loc[scSW.index]
@@ -105,8 +105,8 @@ begin MrBayes;
       mcmc ngen = 11000000;
 end;"""
 
-with open('dialign+original pipeline/albanoRomance.mbPW.nex', 'w') as f:
+with open('dialign+original_pipeline/albanoRomance.mbPW.nex', 'w') as f:
     f.write(mbCommandsPW)
 
-with open('sw+original pipeline/albanoRomance.mbSW.nex', 'w') as f:
+with open('sw+original_pipeline/albanoRomance.mbSW.nex', 'w') as f:
     f.write(mbCommandsSW)

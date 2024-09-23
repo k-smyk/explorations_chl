@@ -4,8 +4,8 @@ from subprocess import Popen
 import os
 
 
-ccPW = pd.read_csv('dialign+original pipeline/albanoRomanceCCbinPW.csv', index_col=0, dtype='str')
-ccSW = pd.read_csv('sw+original pipeline/albanoRomanceCCbinSW.csv', index_col=0, dtype='str')
+ccPW = pd.read_csv('dialign+original_pipeline/albanoRomanceCCbinPW.csv', index_col=0, dtype='str')
+ccSW = pd.read_csv('sw+original_pipeline/albanoRomanceCCbinSW.csv', index_col=0, dtype='str')
 
 romancePW = array([x for x in ccPW.index if not 'ALBANIAN' in x])
 romanceSW = array([x for x in ccSW.index if not 'ALBANIAN' in x])
@@ -13,12 +13,12 @@ romanceSW = array([x for x in ccSW.index if not 'ALBANIAN' in x])
 ccPW = ccPW.loc[romancePW]
 ccSW = ccSW.loc[romanceSW]
 
-with open('dialign+original pipeline/romanceCC_PW.tsv', 'w') as f:
+with open('dialign+original_pipeline/romanceCC_PW.tsv', 'w') as f:
     for i in ccPW.index:
         f.write(i+'\t')
         f.write('\t'.join(ccPW.loc[i].values)+'\n')
 
-with open('sw+original pipeline/romanceCC_SW.tsv', 'w') as f:
+with open('sw+original_pipeline/romanceCC_SW.tsv', 'w') as f:
     for i in ccSW.index:
         f.write(i+'\t')
         f.write('\t'.join(ccSW.loc[i].values)+'\n')
@@ -41,10 +41,10 @@ q;
 End;
 """
 
-with open('dialign+original pipeline/convertRomancePosteriorPW.paup', 'w') as f:
+with open('dialign+original_pipeline/convertRomancePosteriorPW.paup', 'w') as f:
     f.write(paupCommandsPW)
 
-with open('sw+original pipeline/convertRomancePosteriorSW.paup', 'w') as f:
+with open('sw+original_pipeline/convertRomancePosteriorSW.paup', 'w') as f:
     f.write(paupCommandsSW)
 
 pPW = Popen('paup4 convertRomancePosteriorPW.paup>/dev/null',shell=True)

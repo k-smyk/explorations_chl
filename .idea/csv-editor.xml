@@ -3,6 +3,41 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="$PROJECT_DIR$/../sd-CRP-cognates/albanoRomanceCC_CPR_PW.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="&#9;" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/albanoRomanceCC.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/albanoRomanceCC_CPR.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="&#9;" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/albanoRomanceCC_CPR_PW.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="&#9;" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/albanoRomanceCC_CPR_SW.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="&#9;" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/albanoRomanceCC_PW.csv">
           <value>
             <Attribute>
@@ -11,6 +46,13 @@
           </value>
         </entry>
         <entry key="/albanoRomanceCC_SW.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/albanoRomanceCCbinPW.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -31,10 +73,38 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/asrCC_SW.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/original_results/reply/IELex+ASJP.csv">
           <value>
             <Attribute>
               <option name="separator" value="&#9;" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/pairwise_alignment/pmi-albanoRomance-pw.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/pairwise_alignment/pmi-albanoRomance-sw.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/pairwise_alignment/pmi-albanoRomance.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
