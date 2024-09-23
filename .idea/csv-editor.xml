@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../sd-CRP-cognates/socher_output_albanoRomanceCC_PW.csv.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/albanoRomanceCC.csv">
           <value>
             <Attribute>
@@ -123,6 +130,20 @@
           </value>
         </entry>
         <entry key="/reconstruction_results_SW.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/socher_output_albanoRomanceCC_PW.csv.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/socher_output_albanoRomanceCC_SW.csv.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
