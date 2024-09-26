@@ -3,14 +3,14 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="$PROJECT_DIR$/../sd-CRP-cognates/albanoRomanceCC_CPR_PW.csv">
+        <entry key="$PROJECT_DIR$/socher_output_albanoRomanceCC_PW.csv">
           <value>
             <Attribute>
-              <option name="separator" value="&#9;" />
+              <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/../sd-CRP-cognates/socher_output_albanoRomanceCC_PW.csv.csv">
+        <entry key="$PROJECT_DIR$/socher_output_albanoRomanceCC_SW.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -45,42 +45,21 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="/albanoRomanceCC_PW.csv">
+        <entry key="/dialign+original_pipeline/albanoRomanceCC_PW.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/albanoRomanceCC_SW.csv">
+        <entry key="/dialign+original_pipeline/pmi-albanoRomance-pw.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/albanoRomanceCCbinPW.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/albanoRomanceCCbinSW.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/asrCC_PW.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/asrCC_SW.csv">
+        <entry key="/dialign+original_pipeline/reconstruction_results_PW.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -94,42 +73,7 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="/pairwise_alignment/pmi-albanoRomance-pw.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/pairwise_alignment/pmi-albanoRomance-sw.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/pairwise_alignment/pmi-albanoRomance.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="/pmi-albanoRomance.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/reconstruction_results_PW.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/reconstruction_results_SW.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -144,6 +88,20 @@
           </value>
         </entry>
         <entry key="/socher_output_albanoRomanceCC_SW.csv.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/sw+original_pipeline/albanoRomanceCC_SW.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/sw+original_pipeline/reconstruction_results_SW.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
