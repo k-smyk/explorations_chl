@@ -22,50 +22,38 @@ def nexCharOutput(chMtx,names,outfile,datatype='STANDARD'):
     f.close()
 
 
-scPW = pd.read_table('dialign+original_pipeline/albanoRomanceSC-pw.nex',
+sc_socher = pd.read_table('socher_albanoRomanceCC.nexalbanoRomanceSC-pw.nex',
+						  skiprows=7,
+						  skipfooter=4, engine='python',
+						  index_col=0,
+						  sep='\s+', header=None)
+
+
+ccSW = pd.read_table('sw+original_pipeline/albanoRomanceCC_SW.nex',
 					 skiprows=7,
 					 skipfooter=4, engine='python',
 					 index_col=0,
 					 sep='\s+', header=None)
 
-scSW = pd.read_table('sw+original_pipeline/albanoRomanceSC-sw.nex',
-					 skiprows=7,
-					 skipfooter=4, engine='python',
-					 index_col=0,
-					 sep='\s+', header=None)
-
-
-ccPW = pd.read_table('socher_albanoRomanceCC.nex',
-					 skiprows=7,
-					 skipfooter=4, engine='python',
-					 index_col=0,
-					 sep='\s+', header=None)
-
-ccSW = pd.read_table('socher_albanoRomanceCC.nex',
-					 skiprows=7,
-					 skipfooter=4, engine='python',
-					 index_col=0,
-					 sep='\s+', header=None)
-
-ccPW = ccPW.loc[scPW.index]
+ccPW = ccPW.loc[sc_socher.index]
 ccSW = ccSW.loc[scSW.index]
 
-scCC_PW = pd.DataFrame([list(scPW[1][l]+ccPW[1][l]) for l in scPW.index],
-                    index = scPW.index)
+scCC_PW = pd.DataFrame([list(sc_socher[1][l] + ccPW[1][l]) for l in sc_socher.index],
+					   index = sc_socher.index)
 scCC_SW = pd.DataFrame([list(scSW[1][l]+ccSW[1][l]) for l in scSW.index],
                     index = scSW.index)
 
-nexCharOutput(scCC_PW.values,scCC_PW.index,'socher_albanoRomance_sc_cc_PW.nex',datatype='restriction')
-nexCharOutput(scCC_SW.values,scCC_SW.index,'socher_albanoRomance_sc_cc_SW.nex',datatype='restriction')
+nexCharOutput(scCC_PW.values,scCC_PW.index,'albanoRomance_sc_cc_PW.nex',datatype='restriction')
+nexCharOutput(scCC_SW.values,scCC_SW.index,'albanoRomance_sc_cc_SW.nex',datatype='restriction')
 
-nPW = len(scPW.values[0][0])
+nPW = len(sc_socher.values[0][0])
 nSW = len(scSW.values[0][0])
 mPW = len(ccPW.values[0][0])
 mSW = len(ccSW.values[0][0])
 
 mbCommandsPW = """#NEXUS
 begin MrBayes;
-      execute socher_albanoRomance_sc_cc_PW.nex;
+      execute albanoRomance_sc_cc_PW.nex;
       charset sc = 1-"""+str(nPW)+""";
       charset cc = """+str(nPW+1)+"""-"""+str(nPW+mPW)+""";
       partition dtype = 2:sc, cc;
@@ -86,7 +74,7 @@ end;"""
 
 mbCommandsSW = """#NEXUS
 begin MrBayes;
-      execute socher_lbanoRomance_sc_cc_SW.nex;
+      execute albanoRomance_sc_cc_SW.nex;
       charset sc = 1-"""+str(nSW)+""";
       charset cc = """+str(nSW+1)+"""-"""+str(nSW+mSW)+""";
       partition dtype = 2:sc, cc;
@@ -105,8 +93,8 @@ begin MrBayes;
       mcmc ngen = 11000000;
 end;"""
 
-with open('socher_albanoRomance.mbPW.nex', 'w') as f:
+with open('dialign+original_pipeline/albanoRomance.mbPW.nex', 'w') as f:
     f.write(mbCommandsPW)
 
-with open('socher_albanoRomance.mbSW.nex', 'w') as f:
+with open('sw+original_pipeline/albanoRomance.mbSW.nex', 'w') as f:
     f.write(mbCommandsSW)

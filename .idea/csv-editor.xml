@@ -73,6 +73,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/original_results/albanoRomanceCCbin.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/original_results/reply/IELex+ASJP.csv">
           <value>
             <Attribute>
@@ -81,6 +88,20 @@
           </value>
         </entry>
         <entry key="/pmi-albanoRomance.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/socher_albanoRomanceCC.bin.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/socher_output_albanoRomanceCC.csv.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
