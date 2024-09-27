@@ -1,6 +1,6 @@
 #NEXUS
 begin MrBayes;
-      execute socher_lbanoRomance_sc_cc_SW.nex;
+      execute socher_albanoRomance_sc_cc_SW.nex;
       charset sc = 1-1520;
       charset cc = 1521-1772;
       partition dtype = 2:sc, cc;
@@ -12,7 +12,7 @@ begin MrBayes;
       constraint albanian = ALBANIAN_GHEG ALBANIAN ALBANIAN_TOSK;
       constraint romance = 4-.;
       prset topologypr = constraints(albanian,romance);
-      mcmcp stoprule=yes stopval = 0.01 filename = albanoRomanceSW;
+      mcmcp stoprule=yes stopval = 0.01 filename = socher_albanoRomanceSW;
       mcmcp mcmcdiagn=yes diagnfreq=5000 samplefreq=10000 burninfrac=.1;
       set seed=12345;
       set swapseed=12345;

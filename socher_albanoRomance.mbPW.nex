@@ -12,7 +12,7 @@ begin MrBayes;
       constraint albanian = ALBANIAN_GHEG ALBANIAN ALBANIAN_TOSK;
       constraint romance = 4-.;
       prset topologypr = constraints(albanian,romance);
-      mcmcp stoprule=yes stopval = 0.01 filename = albanoRomancePW;
+      mcmcp stoprule=yes stopval = 0.01 filename = socher_albanoRomancePW;
       mcmcp mcmcdiagn=yes diagnfreq=5000 samplefreq=10000 burninfrac=.1;
       set seed=12345;
       set swapseed=12345;
