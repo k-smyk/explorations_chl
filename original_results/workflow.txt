@@ -1,9 +1,9 @@
 Requirements:
 
-- Python v.2.7
+- Python v.3.11
 - Python packages:
   o biopython
-  o ete2
+  o ete3
   o igraph
   o Levenshtein
   o multiprocessing
@@ -19,7 +19,7 @@ Requirements:
 - BayesTraits (available from http://www.evolution.rdg.ac.uk/BayesTraits.html)
 - MrBayes (available from http://mrbayes.sourceforge.net/), compiled for MPI
 - MPI
-- treeannotator (available as part of BEAST v.2 from http://www.beast2.org/)
+- treeannotator (available as part of BEAST v.2 from http://www.beast2.org/) (was done in the BEAST GUI)
 
 
 Workflow:
@@ -31,7 +31,7 @@ command requires 8 cores. Please adapt to your hardware.
 > python cognateClustering.py
 > python combinePartitions.py
 > mpirun -np 8 mb -i albanoRomance.mb.nex
-> R --vanilla < convertTrees.r
+> Rscript convertTrees.r
 > python mbPostprocessing.py
 > treeannotator albanoRomance.posterior.tree albanoRomance.mcc.tre
 > R --vanilla < convert_mccTree.r

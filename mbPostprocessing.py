@@ -13,6 +13,7 @@ p1SW = pd.read_table('sw+original_pipeline/albanoRomanceSW.run1.p',
 p2SW = pd.read_table('sw+original_pipeline/albanoRomanceSW.run2.p',
                      sep='\t', skiprows=1)
 
+
 prPW = pd.concat([p1PW[p1PW.Gen>1000000],p2PW[p2PW.Gen>1000000]])
 prSW = pd.concat([p1SW[p1SW.Gen>1000000],p2SW[p2SW.Gen>1000000]])
 
@@ -39,7 +40,6 @@ with open('sw+original_pipeline/albanoRomanceSW.run2.tre') as f:
             t = Tree(ln.strip())
             treesSW.append(t)
 
-
 taxaPW = array(treesPW[0].get_leaf_names())
 taxaSW = array(treesSW[0].get_leaf_names())
 
@@ -61,6 +61,7 @@ with open('sw+original_pipeline/albanoRomanceSW.posterior.tree', 'w') as f: f.wr
 with open('sw+original_pipeline/albanoRomanceSW.posterior.tree', 'a') as f:
     for t in treesSW:
         f.write(t.write(format=1)+'\n')
+
 
 
 for t in treesPW:
