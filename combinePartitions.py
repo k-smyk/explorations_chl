@@ -35,33 +35,33 @@ scSW = pd.read_table('sw+original_pipeline/albanoRomanceSC-sw.nex',
 					 sep='\s+', header=None)
 
 
-ccPW = pd.read_table('socher_albanoRomanceCC.nex',
-					 skiprows=7,
-					 skipfooter=4, engine='python',
-					 index_col=0,
-					 sep='\s+', header=None)
+ccPWsocher = pd.read_table('socher_albanoRomanceCC.nex',
+						   skiprows=7,
+						   skipfooter=4, engine='python',
+						   index_col=0,
+						   sep='\s+', header=None)
 
-ccSW = pd.read_table('socher_albanoRomanceCC.nex',
-					 skiprows=7,
-					 skipfooter=4, engine='python',
-					 index_col=0,
-					 sep='\s+', header=None)
+ccSWsocher = pd.read_table('socher_albanoRomanceCC.nex',
+						   skiprows=7,
+						   skipfooter=4, engine='python',
+						   index_col=0,
+						   sep='\s+', header=None)
 
-ccPW = ccPW.loc[scPW.index]
-ccSW = ccSW.loc[scSW.index]
+ccPWsocher = ccPWsocher.loc[scPW.index]
+ccSWsocher = ccSWsocher.loc[scSW.index]
 
-scCC_PW = pd.DataFrame([list(scPW[1][l]+ccPW[1][l]) for l in scPW.index],
-                    index = scPW.index)
-scCC_SW = pd.DataFrame([list(scSW[1][l]+ccSW[1][l]) for l in scSW.index],
-                    index = scSW.index)
+scCC_PW = pd.DataFrame([list(scPW[1][l] + ccPWsocher[1][l]) for l in scPW.index],
+					   index = scPW.index)
+scCC_SW = pd.DataFrame([list(scSW[1][l] + ccSWsocher[1][l]) for l in scSW.index],
+					   index = scSW.index)
 
 nexCharOutput(scCC_PW.values,scCC_PW.index,'socher_albanoRomance_sc_cc_PW.nex',datatype='restriction')
 nexCharOutput(scCC_SW.values,scCC_SW.index,'socher_albanoRomance_sc_cc_SW.nex',datatype='restriction')
 
 nPW = len(scPW.values[0][0])
 nSW = len(scSW.values[0][0])
-mPW = len(ccPW.values[0][0])
-mSW = len(ccSW.values[0][0])
+mPW = len(ccPWsocher.values[0][0])
+mSW = len(ccSWsocher.values[0][0])
 
 mbCommandsPW = """#NEXUS
 begin MrBayes;
@@ -105,8 +105,8 @@ begin MrBayes;
       mcmc ngen = 11000000;
 end;"""
 
-with open('socher_albanoRomance.mbPW.nex', 'w') as f:
+with open('dialign+socher+original/socher_albanoRomance.mbPW.nex', 'w') as f:
     f.write(mbCommandsPW)
 
-with open('socher_albanoRomance.mbSW.nex', 'w') as f:
+with open('sw+socher+original/socher_albanoRomance.mbSW.nex', 'w') as f:
     f.write(mbCommandsSW)

@@ -13,12 +13,12 @@ romanceSW = array([x for x in ccSW.index if not 'ALBANIAN' in x])
 ccPW = ccPW.loc[romancePW]
 ccSW = ccSW.loc[romanceSW]
 
-with open('socher_romanceCC_PW.tsv', 'w') as f:
+with open('dialign+socher+original/socher_romanceCC_PW.tsv', 'w') as f:
     for i in ccPW.index:
         f.write(i+'\t')
         f.write('\t'.join(ccPW.loc[i].values)+'\n')
 
-with open('socher_romanceCC_SW.tsv', 'w') as f:
+with open('sw+socher+original/socher_romanceCC_SW.tsv', 'w') as f:
     for i in ccSW.index:
         f.write(i+'\t')
         f.write('\t'.join(ccSW.loc[i].values)+'\n')
@@ -41,10 +41,10 @@ q;
 End;
 """
 
-with open('socher_convertRomancePosteriorPW.paup', 'w') as f:
+with open('dialign+socher+original/socher_convertRomancePosteriorPW.paup', 'w') as f:
     f.write(paupCommandsPW)
 
-with open('socher_convertRomancePosteriorSW.paup', 'w') as f:
+with open('sw+socher+original/socher_convertRomancePosteriorSW.paup', 'w') as f:
     f.write(paupCommandsSW)
 
 pPW = Popen('paup4 socher_convertRomancePosteriorPW.paup>/dev/null',shell=True)

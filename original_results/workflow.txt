@@ -27,7 +27,7 @@ The entire workflow can be replicated by issuing the commands below in the order
 The script estimatePMI.py requires 50 cores on a parallel Unix server, and the MrBayes
 command requires 8 cores. Please adapt to your hardware.
 
-> python estimatePMI.py
+> python estimatePMI.pym
 > python cognateClustering.py
 > python combinePartitions.py
 > mpirun -np 8 mb -i albanoRomance.mb.nex

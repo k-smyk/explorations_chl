@@ -58,8 +58,8 @@ guideTreeSW.render('socher_guideTreeSW.png', tree_style=ts)
 guideTreePW_rt.render('socher_guideTreePW_rt.png', tree_style=ts)
 guideTreeSW_rt.render('socher_guideTreeSW_rt.png', tree_style=ts)
 
-asrCC_PW = pd.read_csv('socher_asrCC_PW.csv', header=None, index_col=0)[1]
-asrCC_SW = pd.read_csv('socher_asrCC_SW.csv', header=None, index_col=0)[1]
+asrCC_PW = pd.read_csv('dialign+socher+original/socher_asrCC_PW.csv', header=None, index_col=0)[1]
+asrCC_SW = pd.read_csv('sw+socher+original/socher_asrCC_SW.csv', header=None, index_col=0)[1]
 
 romancePW = array(guideTreePW_rt.get_leaf_names())
 romanceSW = array(guideTreeSW_rt.get_leaf_names())
