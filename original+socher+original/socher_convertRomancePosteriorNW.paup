@@ -1,0 +1,7 @@
+#Nexus
+Begin Paup;
+set incr=auto;
+gettrees file = socher_romanceNW.posterior.tree;
+savetrees file = socher_romanceNW.posterior.nex.tree replace=yes brlen=user;
+q;
+End;

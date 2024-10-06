@@ -148,5 +148,5 @@ end;"""
 #     f.write(mbCommandsPW)
 # with open('sw+original_pipeline/albanoRomance.mbSW.nex', 'w') as f:
 #     f.write(mbCommandsSW)
-with open('socher_albanoRomance.mbNW.nex', 'w') as f:
+with open('original+socher+original/socher_albanoRomance.mbNW.nex', 'w') as f:
     f.write(mbCommandNW)

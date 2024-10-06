@@ -82,15 +82,15 @@ dataWL = dataWL.drop_duplicates(['concept','language'])
 training = pd.DataFrame()
 for c in concepts:
     cData = dataWL[dataWL.concept==c]
-    cTraining = pd.DataFrame([cData.ix[[i,j]].word.values
+    cTraining = pd.DataFrame([cData.loc[[i,j]].word.values
                               for i in cData.index
                               for j in cData.index
                               if i<j])
-    training = training.append(cTraining)
+    training = training._append(cTraining)
 
 
 
-sounds = unique(concatenate(map(list,dataWL.word.values)))
+sounds = unique(concatenate(list(map(list, dataWL.word.values))))
 
 def levalign(w):
     """takes a pair of strings as input
@@ -213,6 +213,7 @@ def nwalignStar(crp,pmiDict,gp1,gp2,th):
     for p in jobs:
         p.join()
     return vstack(return_dict.values())
+
 
 gp1=-2.49302792222
 gp2=-1.70573165621
