@@ -4,6 +4,7 @@ from ete3 import Tree
 from alignment import tCoffee
 from subprocess import Popen
 import os
+import numpy as np
 
 import PyQt5 # for treestyle
 from ete3 import TreeStyle
@@ -44,14 +45,14 @@ def remove_taxa(tree, taxa_to_exclude=taxa_to_exclude_set):
     return tree
 
 
-guideTreePW = Tree('albanoRomancePW.mcc.nwk')
-guideTreeSW = Tree('albanoRomanceSW.mcc.nwk')
-guideTreePW_rt = remove_taxa(Tree('albanoRomancePW.mcc.nwk'))
-guideTreeSW_rt = remove_taxa(Tree('albanoRomanceSW.mcc.nwk'))
+guideTreePW = Tree('dialign+original_pipeline/albanoRomancePW.mcc.nwk')
+guideTreeSW = Tree('sw+original_pipeline/albanoRomanceSW.mcc.nwk')
+guideTreePW_rt = remove_taxa(Tree('dialign+original_pipeline/albanoRomancePW.mcc.nwk'))
+guideTreeSW_rt = remove_taxa(Tree('sw+original_pipeline/albanoRomanceSW.mcc.nwk'))
 
 ts = TreeStyle()
 ts.show_leaf_name = True
-ts.show_branch_length = True
+#ts.show_branch_length = True
 
 guideTreePW.render('guideTreePW.png', tree_style=ts)
 guideTreeSW.render('guideTreeSW.png', tree_style=ts)
@@ -135,16 +136,16 @@ with open('btAlignments.txt','w') as f:
     f.write('run\n')
 
 
-pPW = Popen('BayesTraitsV4 romancePW.posterior.nex.tree romanceAlignmentsPW.tsv < btAlignments.txt',
+pPW = Popen('BayesTraitsV4 dialign+original_pipeline/romancePW.posterior.nex.tree romanceAlignmentsPW.tsv < btAlignments.txt',
           shell=True)
 os.waitpid(pPW.pid,0)
-pSW = Popen('BayesTraitsV4 romanceSW.posterior.nex.tree romanceAlignmentsSW.tsv < btAlignments.txt',
+pSW = Popen('BayesTraitsV4 sw+original_pipeline/romanceSW.posterior.nex.tree romanceAlignmentsSW.tsv < btAlignments.txt',
           shell=True)
 os.waitpid(pSW.pid,0)
 
-resultsPW = pd.read_csv('romanceAlignmentsPW.tsv.log.txt',
+resultsPW = pd.read_csv('dialign+original_pipeline/romanceAlignmentsPW.tsv.log.txt',
                       skiprows=31,sep='\t')
-resultsSW = pd.read_csv('romanceAlignmentsSW.tsv.log.txt',
+resultsSW = pd.read_csv('sw+original_pipeline/romanceAlignmentsSW.tsv.log.txt',
                         skiprows=31,sep='\t')
 
 
@@ -159,7 +160,6 @@ def result_mean(results, binMtx):
 results_meanPW = result_mean(resultsPW, binMtxPW)
 results_meanSW = result_mean(resultsSW, binMtxSW)
 
-
 def recon_original(res, aBlocks, concepts):
     asr = []
     for x in aBlocks.columns:
@@ -173,6 +173,38 @@ def recon_original(res, aBlocks, concepts):
     reconstruction = pd.Series(reconstruction,index=concepts)
     return reconstruction
 
+
+
+def weighted_reconstruction(res, aBlocks, concepts):
+    asr = []
+    for x in aBlocks.columns:
+        idc = [y for y in res.index if ':'.join(y.split(':')[:2]) == x]
+
+        if idc:
+            weighted_contributions = {}
+            for sound in res[idc].index:
+                weight = res[sound] * pmiDict.get(sound.split(':')[-1], 1)
+                weighted_contributions[sound] = weight
+
+            best_sound = max(weighted_contributions, key=weighted_contributions.get)
+            asr.append(best_sound.split(':')[-1])
+        else:
+            asr.append('0')
+
+    asr = pd.Series(asr, index=aBlocks.columns)
+
+    reconstruction = []
+    for c in concepts:
+        idc = [x for x in asr.index if x.split(':')[0] == c]
+        reconstruction.append(''.join(asr[idc].values).replace('0', ''))  # aggregate
+
+    reconstruction = pd.Series(reconstruction, index=concepts)
+
+    return reconstruction
+
+
+reconstruction_weighted_PW = pd.DataFrame(weighted_reconstruction(results_meanPW, aBlocksPW, conceptsPW))
+reconstruction_weighted_SW = pd.DataFrame(weighted_reconstruction(results_meanSW, aBlocksSW, conceptsSW))
 
 reconstruction_original_PW = pd.DataFrame(recon_original(results_meanPW, aBlocksPW, conceptsPW))
 reconstruction_original_SW = pd.DataFrame(recon_original(results_meanSW, aBlocksSW, conceptsSW))
@@ -192,3 +224,5 @@ def recon_latin(reconstruction, asjp, concepts, filename):
 
 reconstruction_results_PW = recon_latin(reconstruction_original_PW, asjp, conceptsPW, 'reconstruction_results_PW')
 reconstruction_results_SW = recon_latin(reconstruction_original_SW, asjp, conceptsSW, 'reconstruction_results_SW')
+reconstruction_results_weighted_PW = recon_latin(reconstruction_weighted_PW, asjp, conceptsPW, 'reconstruction_results_weighted_PW')
+reconstruction_results_weighted_SW = recon_latin(reconstruction_weighted_SW, asjp, conceptsSW, 'reconstruction_results_weighted_SW')
