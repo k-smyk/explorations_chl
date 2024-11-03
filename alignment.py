@@ -209,14 +209,3 @@ def tCoffee(wTaxa,words,tree,lodict,gp1,gp2,sounds):
 
     alignment_data = list(zip(wTree.nTaxa, wTree.algn))
     return alignment_data
-
-from lingpy import *
-
-# Define the phonetic representations
-english_word = "kwin"  # Phonetic representation of 'queen'
-polish_word = "ʐona"  # Phonetic representation of 'żona'
-
-words = [english_word, polish_word]
-
-print(lingpy.align.pairwise.pw_align('kwin', 'ʐona', mode='global'))
-print(lingpy.align.pairwise.nw_align('kwin', 'ʐona'))
