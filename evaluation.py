@@ -54,6 +54,14 @@ worst_score = proto_romance_scores.max()
 print(f"The best-performing pipeline for Proto-Romance is: {best_pipeline} with a score of {best_score}")
 print(f"The worst-performing pipeline for Proto-Romance is: {worst_pipeline} with a score of {worst_score}")
 
+# one file with all pipelines
+merged_df = reconstructions['socher_original'].merge(
+    reconstructions['socher_dialign'],
+    on=['concept', 'Latin'], suffixes=('_socher_original', '_socher_dialign'))
+for name, df in reconstructions.items():
+    if name not in ['socher_original', 'socher_dialign']:
+        merged_df = merged_df.merge(df, on=['concept', 'Latin'], suffixes=('', f'_{name}'))
+merged_df.to_csv('all_reconstruction_results.csv', index=False)
 # merged_df = reconstructions['socher_original'].merge(
 #     reconstructions['socher_dialign'],
 #     on=['concept', 'Latin'], suffixes=('_original', '_dialign')
